@@ -49,7 +49,7 @@ int main(void)
 	srand((unsigned)time(NULL));	// rand 함수에서 나오는 값들에 변화를 주기 위함
 	
 	for (i = 0; i < n; i++)
-		A[i] = rand() % 100000 + 1;	// A배열의 각 원소들에 1 ~ 100000 사이의 랜덤한 값을 넣어줌
+		A[i] = (int)((rand() << 15) | rand()) % 100000 + 1;	// A배열의 각 원소들에 1 ~ 100000 사이의 랜덤한 값을 넣어줌
 
 	printf("minimum 함수를 이용\n최솟값 : %d\n", minimum(A, n));
 	printf("maximum 함수를 이용\n최댓값 : %d\n", maximum(A, n));

@@ -18,32 +18,32 @@ int main(void)
 		{ {3, 5}, {3, 6}, {0, 8}, {2, 5}, {0, 3} },
 		{ {1, 0}, {3, 0}, {2, 0}, {2, 0}, {0, 0} }	};	// 각각의 정점은 정점의 {오른쪽 가중치, 아래쪽 가중치}로 정의
 
-	int weigh[5][5] = { 0, }, visited[5][5] = { 0, };	// weigh는 각 정점들의 가중치를 담는 배열, visited는 방문된 정점을 확인하기 위한 배열
+	int weight[5][5] = { 0, }, visited[5][5] = { 0, };	// weight는 각 정점들의 가중치를 담는 배열, visited는 방문된 정점을 확인하기 위한 배열
 	int i, j, a = 0, b = 0;
-	weigh[0][0] = 0; visited[4][4] = 1;		// 첫번째 정점의 가중치는 0이어야하고 맨 마지막 정점은 반드시 방문되어야 함
+	weight[0][0] = 0; visited[4][4] = 1;		// 첫번째 정점의 가중치는 0이어야하고 맨 마지막 정점은 반드시 방문되어야 함
 
 	for (i = 1; i < 5; i++)
-		weigh[i][0] = weigh[i - 1][0] + ver[i-1][0].down;	// 0열에 있는 정점들의 가중치 부여
+		weight[i][0] = weight[i - 1][0] + ver[i-1][0].down;	// 0열에 있는 정점들의 가중치 부여
 	for (j = 1; j < 5; j++)
-		weigh[0][j] = weigh[0][j - 1] + ver[0][j - 1].right;		// 0행에 있는 정점들의 가중치 부여
+		weight[0][j] = weight[0][j - 1] + ver[0][j - 1].right;		// 0행에 있는 정점들의 가중치 부여
 	for (i = 1; i < 5; i++)
 	{
 		for (j = 1; j < 5; j++)
 		{
-			a = weigh[i][j - 1] + ver[i][j - 1].right;	// 왼쪽에서 오른쪽으로 가는 경우
-			b = weigh[i - 1][j] + ver[i - 1][j].down;		// 위에서 아래로 갈 경우
+			a = weight[i][j - 1] + ver[i][j - 1].right;	// 왼쪽에서 오른쪽으로 가는 경우
+			b = weight[i - 1][j] + ver[i - 1][j].down;		// 위에서 아래로 갈 경우
 
 			if (a > b)
-				weigh[i][j] = a;	// 오른쪽의 가중치를 더해준다
+				weight[i][j] = a;	// 오른쪽의 가중치를 더해준다
 			else
-				weigh[i][j] = b;	// 왼쪽의 가중치를 더해준다
+				weight[i][j] = b;	// 왼쪽의 가중치를 더해준다
 		}
 	}
 
 	i = 4; j = 4;	// 맨 마지막 정점부터
 	while (i >= 0 && j >= 0)	//	제일 앞 정점까지 Backtracking
 	{
-		if (i == 1 || j == 1)	// 정점에 부여된 가중치(weigh)만 따라갈 경우에 발생하는 문제 해결(1행 이하 혹은 1열 이하 일 때만)
+		if (i == 1 || j == 1)	// 정점에 부여된 가중치(weight)만 따라갈 경우에 발생하는 문제 해결(1행 이하 혹은 1열 이하 일 때만)
 		{
 			if (ver[i - 1][j].down > ver[i][j - 1].right)	// 현재 정점의 위쪽 간선과 왼쪽 간선을 비교
 			{
@@ -58,7 +58,7 @@ int main(void)
 		}
 		else
 		{
-			if (weigh[i - 1][j] >= weigh[i][j - 1])
+			if (weight[i - 1][j] >= weight[i][j - 1])
 			{
 				visited[i - 1][j] = 1;
 				i--;
@@ -71,11 +71,11 @@ int main(void)
 		}
 	}
 
-	printf("weigh\n");
+	printf("weight\n");
 	for (i = 0; i < 5; i++)
 	{
 		for (j = 0; j < 5; j++)
-			printf("%2d ", weigh[i][j]);	// 정점에 부여된 가중치 출력
+			printf("%2d ", weight[i][j]);	// 정점에 부여된 가중치 출력
 		printf("\n");
 	}
 	printf("\n");
